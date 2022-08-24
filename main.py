@@ -1,6 +1,6 @@
 import pytube
 import os
-from pytube import YouTube
+from pytube import YouTube,Playlist
 
 tempLink = "https://www.youtube.com/watch?v=Q4Y1lAhnOVY"
 
@@ -43,8 +43,8 @@ def manageP(playlistLink,mp3,mp4,subs,destination,languages):
             mp3download(url,destination)
         if subs:
             downloadSubtitle(url,destination,languages)
-def manageV(videoLink,mp3,mp4,subs,destination,languages):
-    p = YouTube()videoLink
+def manageV(url,mp3,mp4,subs,destination,languages):
+    p = YouTube(url)
     if mp3:
         mp3download(url,destination)
     if mp4:
