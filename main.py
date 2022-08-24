@@ -51,5 +51,8 @@ def manageV(url,mp3,mp4,subs,destination,languages):
         mp3download(url,destination)
     if subs:
         downloadSubtitle(url,destination,languages)
+def convertUrlToChannelUrl(url):
+    yt = YouTube(url)
+    return(url.channel_url)
 main()
 
