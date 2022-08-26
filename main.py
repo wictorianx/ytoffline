@@ -18,11 +18,13 @@ def mp3download(link,destination):
     new_file = base + '.mp3'
     os.rename(out_file, new_file)
     print(yt.title + " has been successfully downloaded.")
+    #message?
 def mp4download(link, destination):
     yt = YouTube(link)
     sound = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
     out_file = sound.download(output_path=destination)
     print(yt.title + " has been successfully downloaded.")
+    #message
 def downloadSubtitle(link,destination, languages):
     subs = destination+"\\Subs"
     if not os.path.isdir(subs):
@@ -61,25 +63,16 @@ def manageV(url,mp3,mp4,subs,destination,languages):
 def convertUrlToChannelUrl(url):
     yt = YouTube(url)
     return(url.channel_url)
-#add download last/first x videos of playlist
-#manageV(tempLink,False,False,True,"D:\\tests",["en","tr"])
-def reverse_list(original_list):
-   return [original_list[len(original_list) - i] for i in range(1, len(original_list)+1)]
- 
 def manageF(playlistLink,mp3,mp4,subs,destination,languages,interval):
     #interval = [min,max]
     p = Playlist(playlistLink)
     vids = p.video_urls
-    vids = reverse_list(vids)
     for i in range(len(interval)):
         interval[i]=interval[i]-1
-        #interval[i]=interval[i]-(len(vids)-interval[0])
-    
-    url = interval[0]
-    
-    #for url in len(p.video_urls):
-    while(interval[0] >= url and url <= interval[1]):
-        if url > interval[1]:
+    i0,i1 = interval[0],interval[1]
+    url = i0
+    while(i0 <= url and url <= i1):
+        if url > i1:
             break
         if mp3:
             mp3download(vids[url],destination)
@@ -88,4 +81,6 @@ def manageF(playlistLink,mp3,mp4,subs,destination,languages,interval):
         if subs:
             downloadSubtitle(vids[url],destination,languages)
         url+=1
-manageF("https://www.youtube.com/watch?v=dLgquj0c5_U&list=PLCC34OHNcOtpz7PJQ7Tv7hqFBP_xDDjqg",True,False,False,"D:\\tests",[],[34,34])
+
+  
+#manageF("https://www.youtube.com/watch?v=dLgquj0c5_U&list=PLCC34OHNcOtpz7PJQ7Tv7hqFBP_xDDjqg",True,False,False,"D:\\tests",[],[34,34])
